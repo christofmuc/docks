@@ -71,6 +71,13 @@ public:
         virtual const juce::String getDefaultWindowName() const = 0;
         
         /**
+         Create a new top level window
+         Overide this to return a subclass of DockingWindow you can use to specialize Root window behavior.
+         @returns the new top level window
+         */
+        virtual std::shared_ptr<DockingWindow> createTopLevelWindow(DockManager& manager, DockManagerData& data, const juce::ValueTree& tree);
+
+        /**
          Menu
          For Apple, just return nullptr and in your MenuBarModel (wherever that is) set it up to be the main menu
          If you return anything besides nullptr, it will add it to the window (which you probably dont want on macs)

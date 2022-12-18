@@ -1,5 +1,6 @@
 #include "DockManager.h"
 #include "DockingWindow.h"
+#include "DockingComponent.h"
 
 /**
  -------------------------------------------------------------
@@ -25,6 +26,10 @@ DockManager::~DockManager()
     _windows.clear();
 }
 
+
+std::shared_ptr<DockingWindow> DockManager::Delegate::createTopLevelWindow(DockManager& manager, DockManagerData& data, const juce::ValueTree& tree) {
+    return std::make_shared<DockingWindow>(manager, data, tree);
+}
 
 
 /**
@@ -511,7 +516,7 @@ void DockManager::valueTreeChildAdded(juce::ValueTree& parentTree, juce::ValueTr
     auto id = _data.getUuid(childWhichHasBeenAdded);
     
     /// Create Window
-    auto window = std::make_shared<DockingWindow>(*this, _data, childWhichHasBeenAdded);
+    auto window = _delegate.createTopLevelWindow(*this, _data, childWhichHasBeenAdded);
     
     /// Add to Map
     _windows.set(id, window);

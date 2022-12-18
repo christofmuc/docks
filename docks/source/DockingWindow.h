@@ -153,7 +153,8 @@ public:
     
     /// Overlay
     void showOverlay(bool show, const juce::String& textToShow);
-private:
+
+protected:
     /// Window Overrides
     void closeButtonPressed() override;
     void minimiseButtonPressed() override;
